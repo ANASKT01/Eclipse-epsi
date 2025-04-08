@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:tns="http://helloservice/"
+xmlns:soap = "http://schemas.xmlsoap.org/wsdl/soap/"
+xmlns="http://schemas.xmlsoap.org/wsdl/"
+targetNamespace="http://helloservice/" name="HelloService">
+
+<!-- Import of the XML data-types used -->
+<types>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://helloservice/">
+<xsd:element name="sayHello" type="xsd:string"/>
+<xsd:element name="sayHelloResponse" type="xsd:string"/>
+</xsd:schema>
+</types>
+
+<!-- Messages definition-->
+<message name="sayHello">
+<part name="parameters" element="tns:sayHello"/>
+</message>
+<message name="sayHelloResponse">
+<part name="parameters" element="tns:sayHelloResponse"/>
+</message>
+
+<portType name="HelloService">
+<operation name="sayHello">
+<!-- Definition of the input message for the Hello operation -->
+<input message="tns:sayHello" />
+<!-- Definition of the output message for the Hello operation -->
+<output message="tns:sayHelloResponse" />
+</operation>
+</portType>
+<!-- PortType binding definition -->
+<binding name="HelloServicePortBinding" type="tns:HelloService">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+style="document" />
+<operation name="sayHello">
+<input>
+<soap:body use="literal" />
+</input>
+<output>
+<soap:body use="literal" />
+</output>
+</operation>
+</binding>
+<!-- Service definition -->
+<service name="HelloService">
+<port name="HelloServicePort" binding="tns:HelloServicePortBinding">
+<!-- Service address -->
+<soap:address location="http://localhost:8080/helloservice/HelloService" />
+</port>
+</service>
+</definitions>
